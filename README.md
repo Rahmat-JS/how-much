@@ -1,22 +1,53 @@
 
-# `how-much` Project Structure
+# How Much
 
-This project is structured as a standard installable Python package using Poetry for dependency management. The core design principle is modularity, especially for the statistics gathering, to make it easy to add new types of analysis in the future.
+`how-much` is a command-line tool to get statistics from your code repositories or directories. It's built to be fast, simple, and easily extensible.
 
+## Features
+
+-   Calculates statistics like total lines (including and excluding empty lines), characters, and file counts.
+-   Correctly ignores files specified in `.gitignore` files at any directory level.
+-   Supports a custom `.howmuchignore` file for project-specific ignores.
+-   Can display a tree view of all processed (non-ignored) files.
+-   Extensible plugin system for adding new statistics.
+-   Beautiful and clear output powered by the `rich` library.
+    
+
+## Installation
+
+Assuming you have [Poetry](https://python-poetry.org/ "null") installed:
 ```
-how-much/
-├── pyproject.toml         # Defines the project, dependencies (rich, typer), and CLI command.
-├── README.md              # Instructions and description for the project.
-│
-└── how_much/              # This is the main source code package for the application.
-    ├── __init__.py        # Makes `how_much` a Python package and holds the version number.
-    ├── cli.py             # Handles the command-line interface using Typer and Rich.
-    ├── main.py            # The application's core logic: orchestrates file scanning and analysis.
-    ├── ignore.py          # Logic for parsing `.gitignore` and `.howmuchignore` files.
-    │
-    └── stats/             # A sub-package for all the statistic calculators (the extensible part).
-        ├── __init__.py    # Makes `stats` a Python package.
-        ├── base_stat.py   # Defines the abstract base class that all statistic calculators must inherit.
-        ├── core_stats.py  # Implements the core statistics: line and character counts.
-        └── file_counter.py# A simple stat calculator for counting files. (New stats go in new files here).
+# Clone the repository (or navigate to your project directory)
+git clone <your-repo-url>
+cd how-much
+
+# Install dependencies
+poetry install
+
+# Run the tool
+poetry run how-much .
+```
+
+To install it as a global command via `pip` from source:
+```
+pip install .
+```
+
+## Usage
+
+Run it against the current directory to see statistics:
+```
+how-much .
+```
+
+Or specify a path to a directory or a single file:
+```
+how-much path/to/your/project
+```
+
+### Listing Files
+
+To see a tree view of all the files that will be included in the calculations (i.e., not ignored), use the `--list-files` or `-l` flag:
+```
+how-much . --list-files
 ```
