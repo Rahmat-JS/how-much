@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "how-much-repo-analyzer"
+version = "0.1.0"
+description = "A command-line tool to calculate statistics for a code repository, ignoring files from .gitignore and .howmuchignore."
+authors = ["Rahmat Ansari <rahmat.ansari.dev@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/Rahmat-JS/how-much"
+homepage = "https://github.com/Rahmat-JS/how-much"
+
+# The fix is here: using double brackets to define an array of tables.
+[[tool.poetry.packages]]
+include = "how_much"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+rich = "^13.7.1"
+typer = {version = "^0.12.3", extras = ["all"]}
+
+[tool.poetry.scripts]
+how-much = "how_much.cli:app"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
